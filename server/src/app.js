@@ -14,7 +14,24 @@ const app = express();
 
 // ─── Core middleware ──────────────────────────────────────────────────────────
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
-app.use(cors());
+// ─── CORS configuration ────────────────────────────────────────────────────────
+const allowedOrigins = process.env.CLIENT_URL ? [process.env.CLIENT_URL] : [];
+if (process.env.NODE_ENV !== 'production') {
+  allowedOrigins.push('http://localhost:5173');
+}
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
+
 app.use(express.json());
 
 // ─── API routes ───────────────────────────────────────────────────────────────
@@ -24,7 +41,7 @@ app.use('/api', apiRouter);
 app.use('/api/*', notFound);
 
 // ─── Production: serve compiled Vite client ──────────────────────────────────
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === '') {
   const clientDist = path.join(__dirname, '../../client/dist');
   app.use(express.static(clientDist));
   // SPA catch-all — send index.html for any non-API route

@@ -7,6 +7,7 @@ import {
 } from 'react-icons/fi';
 import { Button, Card, ProgressBar, Loader } from '../../components/index.js';
 import { getInterviewState, setInterviewReport, setInterviewEvaluations, getInterviewReport } from '../../utils/storage.js';
+import { apiFetch } from '../../utils/api.js';
 import styles from './Interview.module.css';
 
 const STATUS = { IDLE: 'idle', STARTING: 'starting', ASKING: 'asking', EVALUATING: 'evaluating', COACH_TIP: 'coach_tip', FINISHED: 'finished', ERROR: 'error' };
@@ -54,7 +55,7 @@ function Interview() {
     setStatus(STATUS.STARTING);
     setErrorMsg('');
     try {
-      const res  = await fetch('/api/interview/start', {
+      const res  = await apiFetch('/api/interview/start', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ mode }),
@@ -76,7 +77,7 @@ function Interview() {
     setStatus(STATUS.EVALUATING);
     setErrorMsg('');
     try {
-      const res  = await fetch('/api/interview/answer', {
+      const res  = await apiFetch('/api/interview/answer', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ answer: answer.trim() }),

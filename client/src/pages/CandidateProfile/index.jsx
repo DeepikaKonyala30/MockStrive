@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fi';
 import { Button, Card, Loader } from '../../components/index.js';
 import { getInterviewState, updateInterviewState, clearInterviewState } from '../../utils/storage.js';
+import { apiFetch } from '../../utils/api.js';
 import styles from './CandidateProfile.module.css';
 
 const INITIAL = {
@@ -87,7 +88,7 @@ function CandidateProfile() {
     setJdMatch(null);
 
     try {
-      const res  = await fetch('/api/prep/jd/analyze', {
+      const res  = await apiFetch('/api/prep/jd/analyze', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ jdText }),
@@ -111,7 +112,7 @@ function CandidateProfile() {
     setAnalysis(null);
 
     try {
-      const res = await fetch('/api/profile', {
+      const res = await apiFetch('/api/profile', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify(form),

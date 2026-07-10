@@ -40,11 +40,20 @@ InterviewIQ is an AI-powered interview preparation platform designed to help can
 - IBM Cloud API Key and watsonx Project ID
 
 ### Environment Variables
-Create a `.env` file in the root directory:
 
+**Frontend (Vercel / `client/.env.production`)**
 ```env
-PORT=3000
-NODE_ENV=development
+# The production URL of the Render backend
+VITE_API_URL=your_render_url
+```
+
+**Backend (Render / `server/.env`)**
+```env
+NODE_ENV=production
+PORT=5001
+
+# The production URL of the Vercel frontend (for CORS)
+CLIENT_URL=your_vercel_url
 
 # IBM watsonx.ai Configuration
 WATSONX_API_KEY=your_ibm_cloud_api_key
