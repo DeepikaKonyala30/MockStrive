@@ -1,7 +1,7 @@
 {
-  "name": "interviewiq",
+  "name": "mockstrive",
   "version": "1.0.0",
-  "description": "AI-powered interview coaching platform — InterviewIQ",
+  "description": "AI-powered interview coaching platform — MockStrive",
   "private": true,
   "scripts": {
     "dev": "concurrently --names \"client,server\" --prefix-colors \"cyan,yellow\" \"npm --prefix client run dev\" \"npm --prefix server run dev\"",

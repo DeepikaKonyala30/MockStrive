@@ -1,8 +1,8 @@
-# InterviewIQ
+# MockStrive
 
 **Practice Smart. Interview Confidently.**
 
-InterviewIQ is an AI-powered interview preparation platform designed to help candidates perform at their best. By analysing your professional profile and matching it against specific job descriptions, InterviewIQ provides tailored, hyper-realistic interview scenarios driven by IBM's Granite foundation models via watsonx.ai.
+MockStrive is an AI-powered interview preparation platform designed to help candidates perform at their best. By analysing your professional profile and matching it against specific job descriptions, MockStrive provides tailored, hyper-realistic interview scenarios driven by IBM's Granite foundation models via watsonx.ai.
 
 ## 🌟 Features
 
@@ -23,7 +23,7 @@ InterviewIQ is an AI-powered interview preparation platform designed to help can
 
 ## 🧠 Architecture & AI Workflow
 
-1. **Client State (Persistent):** The frontend stores the candidate's profile, JD, and AI analyses (`interviewIQState`) in `localStorage`. This avoids redundant calls to the LLM and creates a snappy user experience.
+1. **Client State (Persistent):** The frontend stores the candidate's profile, JD, and AI analyses (`mockStriveState`) in `localStorage`. This avoids redundant calls to the LLM and creates a snappy user experience.
 2. **Session Context:** The Node.js backend maintains lightweight, in-memory session stores for active interview flows to ensure context is maintained across question-answer pairs.
 3. **AI Coaching Loop:** 
    - A prompt is constructed containing the candidate's profile, mode, past Q&A, and JD context.
@@ -89,7 +89,7 @@ npm run dev
 ## 📁 Folder Structure
 
 ```
-InterviewIQ/
+MockStrive/
 ├── client/
 │   ├── src/
 │   │   ├── components/      # Reusable UI components (Button, Card, Loader)

@@ -1,9 +1,9 @@
-export const STATE_KEY = 'interviewIQState';
-export const SESSION_REPORT_KEY = 'interviewIQReport';
-export const SESSION_EVALS_KEY = 'interviewIQEvaluations';
+export const STATE_KEY = 'mockStriveState';
+export const SESSION_REPORT_KEY = 'mockStriveReport';
+export const SESSION_EVALS_KEY = 'mockStriveEvaluations';
 
 /**
- * Get the full InterviewIQ state from localStorage.
+ * Get the full MockStrive state from localStorage.
  */
 export function getInterviewState() {
   try {
@@ -15,7 +15,7 @@ export function getInterviewState() {
 }
 
 /**
- * Update the InterviewIQ state in localStorage.
+ * Update the MockStrive state in localStorage.
  * Overwrites only the provided fields.
  */
 export function updateInterviewState(updates) {
@@ -30,7 +30,7 @@ export function updateInterviewState(updates) {
 }
 
 /**
- * Clear the InterviewIQ state entirely (Reset Profile).
+ * Clear the MockStrive state entirely (Reset Profile).
  */
 export function clearInterviewState() {
   try {

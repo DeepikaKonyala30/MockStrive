@@ -96,7 +96,7 @@ function Home() {
             IBM watsonx.ai Powered
           </motion.div>
           <motion.h1 className={styles.headline} variants={fadeUp}>
-            <span className={styles.highlight}>InterviewIQ</span>
+            <span className={styles.highlight}>MockStrive</span>
           </motion.h1>
           <motion.p className={styles.subheadline} variants={fadeUp}>
             Practice Smart. Interview Confidently.

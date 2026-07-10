@@ -30,12 +30,9 @@ function About() {
     >
       <div className={`${styles.inner} container`}>
         {/* About card */}
-        <Card title="About Interview Trainer Agent" animate={false} className={styles.card}>
+        <Card title="About MockStrive" animate={false} className={styles.card}>
           <p className={styles.description}>
-            Interview Trainer Agent is an open, extensible coaching platform that combines a modern
-            React interface with an Express backend designed for IBM watsonx.ai integration.
-            It guides candidates through mock interviews, evaluates answers across multiple
-            dimensions, and delivers structured performance reports.
+            MockStrive is an AI-powered interview coaching platform built with React, Express, IBM watsonx.ai, and IBM Granite Models. It enables users to practice personalized mock interviews, receive AI-based evaluations, and improve their confidence through detailed performance reports.
           </p>
 
           <div className={styles.stackSection}>

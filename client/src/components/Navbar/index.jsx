@@ -27,7 +27,7 @@ function Navbar() {
         {/* Logo */}
         <NavLink to="/" className={styles.logo} onClick={() => setOpen(false)}>
           <FiCpu className={styles.logoIcon} />
-          <span>InterviewIQ</span>
+          <span>MockStrive</span>
         </NavLink>
 
         {/* Desktop links */}
