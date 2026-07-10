@@ -1,0 +1,44 @@
+.card {
+  border-radius: var(--radius-card);
+  box-shadow:    var(--shadow-card);
+  padding:       var(--space-lg);
+  display:       flex;
+  flex-direction: column;
+  gap:           var(--space-sm);
+}
+
+.iconRow {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-sm);
+}
+
+.icon {
+  display:     flex;
+  align-items: center;
+  font-size:   20px;
+  color:       var(--color-primary);
+}
+
+.label {
+  font-size:   var(--font-size-sm);
+  font-weight: 600;
+  color:       var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* Large numeric score */
+.metricValue {
+  font-size:   var(--font-size-3xl);
+  font-weight: 700;
+  color:       var(--color-text);
+  line-height: 1.1;
+}
+
+/* Multi-line text value (Strengths, Weaknesses, etc.) */
+.textValue {
+  font-size:   var(--font-size-base);
+  color:       var(--color-text-muted);
+  line-height: var(--line-height);
+}

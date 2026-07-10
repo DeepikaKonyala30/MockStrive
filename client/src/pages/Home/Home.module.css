@@ -1,0 +1,423 @@
+/* ─── Page wrapper ───────────────────────────────────────────────────────────── */
+.page {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  width:          100%;
+  overflow-x:     hidden;
+  position:       relative;
+}
+
+/* ─── Background blobs (floating decoration) ─────────────────────────────────── */
+.bgBlob1,
+.bgBlob2,
+.bgBlob3 {
+  position:       fixed;
+  border-radius:  50%;
+  pointer-events: none;
+  z-index:        0;
+  filter:         blur(120px);
+}
+.bgBlob1 {
+  width:      600px;
+  height:     600px;
+  top:        -200px;
+  left:       -150px;
+  background: rgba(59, 130, 246, 0.06);
+}
+.bgBlob2 {
+  width:      500px;
+  height:     500px;
+  top:        40vh;
+  right:      -180px;
+  background: rgba(139, 92, 246, 0.05);
+}
+.bgBlob3 {
+  width:      400px;
+  height:     400px;
+  bottom:     0;
+  left:       30%;
+  background: rgba(16, 185, 129, 0.04);
+}
+
+/* ─── Section base ───────────────────────────────────────────────────────────── */
+.section {
+  width:      100%;
+  padding:    100px var(--space-lg);
+  position:   relative;
+  z-index:    1;
+}
+.sectionAlt {
+  background: rgba(255, 255, 255, 0.02);
+}
+.sectionInner {
+  max-width: var(--max-width);
+  margin:    0 auto;
+}
+
+/* ─── Section header ─────────────────────────────────────────────────────────── */
+.sectionHeader {
+  text-align:    center;
+  margin-bottom: 56px;
+}
+.sectionLabel {
+  display:        inline-block;
+  font-size:      13px;
+  font-weight:    700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color:          var(--color-primary);
+  margin-bottom:  var(--space-sm);
+}
+.sectionTitle {
+  font-size:      clamp(1.75rem, 4vw, 2.5rem);
+  font-weight:    800;
+  color:          var(--color-text);
+  line-height:    1.2;
+  margin-bottom:  var(--space-md);
+  letter-spacing: -0.4px;
+}
+.sectionSubtitle {
+  font-size:  var(--font-size-lg);
+  color:      var(--color-text-muted);
+  max-width:  540px;
+  margin:     0 auto;
+  line-height: 1.7;
+}
+
+/* ─── HERO ───────────────────────────────────────────────────────────────────── */
+.hero {
+  width:          100%;
+  min-height:     calc(100vh - var(--navbar-height));
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  padding:        var(--space-2xl) var(--space-lg);
+  position:       relative;
+  z-index:        1;
+}
+.heroContent {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  text-align:     center;
+  max-width:      780px;
+  gap:            var(--space-lg);
+}
+.heroBadge {
+  display:        inline-flex;
+  align-items:    center;
+  padding:        7px 20px;
+  border-radius:  var(--radius-full);
+  border:         1px solid var(--color-primary);
+  color:          var(--color-primary);
+  font-size:      15px;
+  font-weight:    600;
+  letter-spacing: 0.5px;
+  background:     var(--color-primary-muted);
+}
+.headline {
+  font-size:      clamp(2.5rem, 7vw, 4.5rem);
+  font-weight:    900;
+  line-height:    1.1;
+  color:          var(--color-text);
+  letter-spacing: -1px;
+}
+.highlight {
+  color: var(--color-primary);
+}
+.subheadline {
+  font-size:   clamp(1rem, 2vw, 1.2rem);
+  color:       var(--color-text-muted);
+  max-width:   580px;
+  line-height: 1.75;
+}
+.ctaRow {
+  display:         flex;
+  gap:             var(--space-md);
+  flex-wrap:       wrap;
+  justify-content: center;
+}
+.heroStats {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-xl);
+  margin-top:  var(--space-md);
+  flex-wrap:   wrap;
+  justify-content: center;
+}
+.stat {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            2px;
+}
+.statNum {
+  font-size:   1.9rem;
+  font-weight: 800;
+  color:       var(--color-text);
+  line-height: 1;
+}
+.statLabel {
+  font-size:      14px;
+  color:          var(--color-text-muted);
+  font-weight:    500;
+  letter-spacing: 0.4px;
+}
+.statDivider {
+  width:      1px;
+  height:     36px;
+  background: var(--color-border);
+}
+
+/* ─── HOW IT WORKS ───────────────────────────────────────────────────────────── */
+.stepsGrid {
+  display:               grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap:                   var(--space-lg);
+}
+.stepCard {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-sm);
+  padding:        var(--space-lg);
+  background:     var(--color-glass);
+  border:         1px solid var(--color-border);
+  border-radius:  var(--radius-card);
+  backdrop-filter: blur(8px);
+  position:       relative;
+}
+.stepNum {
+  font-size:   2.2rem;
+  font-weight: 900;
+  color:       var(--color-primary);
+  opacity:     0.25;
+  line-height: 1;
+}
+.stepTitle {
+  font-size:   var(--font-size-base);
+  font-weight: 700;
+  color:       var(--color-text);
+  line-height: 1.3;
+}
+.stepBody {
+  font-size:   var(--font-size-sm);
+  color:       var(--color-text-muted);
+  line-height: 1.65;
+}
+
+/* ─── FEATURES ───────────────────────────────────────────────────────────────── */
+.featuresGrid {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   var(--space-lg);
+}
+.featureCard {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-sm);
+  padding:        var(--space-xl);
+  background:     var(--color-glass);
+  border:         1px solid var(--color-border);
+  border-radius:  var(--radius-card);
+  backdrop-filter: blur(8px);
+  height:         100%;
+}
+.featureIcon {
+  font-size:     30px;
+  color:         var(--color-primary);
+  margin-bottom: var(--space-xs);
+}
+.featureTitle {
+  font-size:   var(--font-size-lg);
+  font-weight: 700;
+  color:       var(--color-text);
+  line-height: 1.3;
+}
+.featureBody {
+  font-size:   var(--font-size-base);
+  color:       var(--color-text-muted);
+  line-height: 1.7;
+}
+
+/* ─── INTERVIEW TYPES (MODES) ────────────────────────────────────────────────── */
+.modesGrid {
+  display:               grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap:                   var(--space-md);
+}
+.modeCard {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  text-align:     center;
+  gap:            var(--space-sm);
+  padding:        var(--space-xl) var(--space-md);
+  background:     var(--color-glass);
+  border:         1px solid var(--color-border);
+  border-radius:  var(--radius-card);
+  backdrop-filter: blur(8px);
+  cursor:         default;
+  border-top:     3px solid var(--mode-color, var(--color-primary));
+}
+.modeIcon {
+  font-size: 28px;
+  color:     var(--mode-color, var(--color-primary));
+}
+.modeLabel {
+  font-size:   var(--font-size-lg);
+  font-weight: 700;
+  color:       var(--color-text);
+}
+.modeDesc {
+  font-size:   var(--font-size-sm);
+  color:       var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ─── WHY CHOOSE ─────────────────────────────────────────────────────────────── */
+.whyGrid {
+  display:         grid;
+  grid-template-columns: 1fr 1fr;
+  gap:             64px;
+  align-items:     center;
+}
+.whyLeft {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-lg);
+}
+.whyLeft .sectionTitle,
+.whyLeft .sectionSubtitle {
+  text-align: left;
+  max-width:  unset;
+  margin:     0;
+}
+.whyList {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-md);
+  list-style:     none;
+}
+.whyItem {
+  display:     flex;
+  align-items: flex-start;
+  gap:         var(--space-md);
+  font-size:   var(--font-size-base);
+  color:       var(--color-text);
+  line-height: 1.6;
+  padding:     var(--space-md);
+  background:  var(--color-glass);
+  border:      1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+.whyCheck {
+  font-size:  18px;
+  color:      var(--color-success);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ─── IBM TECHNOLOGIES ───────────────────────────────────────────────────────── */
+.ibmGrid {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   var(--space-lg);
+}
+.ibmCard {
+  display:      flex;
+  align-items:  flex-start;
+  gap:          var(--space-md);
+  padding:      var(--space-xl);
+  background:   var(--color-glass);
+  border:       1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(8px);
+}
+.ibmIcon {
+  font-size:    28px;
+  color:        var(--color-primary);
+  flex-shrink:  0;
+  margin-top:   2px;
+}
+.ibmTitle {
+  font-size:     var(--font-size-lg);
+  font-weight:   700;
+  color:         var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+.ibmDesc {
+  font-size:   var(--font-size-sm);
+  color:       var(--color-text-muted);
+  line-height: 1.65;
+}
+
+/* ─── FINAL CTA ──────────────────────────────────────────────────────────────── */
+.ctaSection {
+  width:      100%;
+  padding:    120px var(--space-lg);
+  position:   relative;
+  z-index:    1;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.08) 0%,
+    rgba(139, 92, 246, 0.06) 100%
+  );
+  border-top:    1px solid var(--color-border);
+}
+.ctaInner {
+  max-width:  680px;
+  margin:     0 auto;
+  text-align: center;
+  display:    flex;
+  flex-direction: column;
+  gap:        var(--space-lg);
+  align-items: center;
+}
+.ctaTitle {
+  font-size:      clamp(2rem, 5vw, 3rem);
+  font-weight:    900;
+  color:          var(--color-text);
+  line-height:    1.2;
+  letter-spacing: -0.5px;
+}
+.ctaSubtitle {
+  font-size:   var(--font-size-lg);
+  color:       var(--color-text-muted);
+  line-height: 1.7;
+  max-width:   500px;
+}
+.ctaButtons {
+  display: flex;
+  gap:     var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .stepsGrid { grid-template-columns: repeat(3, 1fr); }
+  .modesGrid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .featuresGrid { grid-template-columns: repeat(2, 1fr); }
+  .ibmGrid      { grid-template-columns: repeat(2, 1fr); }
+  .whyGrid      { grid-template-columns: 1fr; gap: var(--space-2xl); }
+  .modesGrid    { grid-template-columns: repeat(2, 1fr); }
+  .stepsGrid    { grid-template-columns: repeat(2, 1fr); }
+  .section      { padding: 72px var(--space-lg); }
+}
+
+@media (max-width: 600px) {
+  .featuresGrid { grid-template-columns: 1fr; }
+  .ibmGrid      { grid-template-columns: 1fr; }
+  .modesGrid    { grid-template-columns: repeat(2, 1fr); }
+  .stepsGrid    { grid-template-columns: 1fr; }
+  .hero         { min-height: 85vh; }
+  .headline     { letter-spacing: -0.5px; }
+  .section      { padding: 56px var(--space-md); }
+  .ctaSection   { padding: 72px var(--space-md); }
+  .heroStats    { gap: var(--space-lg); }
+  .statDivider  { display: none; }
+}

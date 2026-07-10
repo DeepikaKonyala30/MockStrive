@@ -1,0 +1,114 @@
+.navbar {
+  position:   sticky;
+  top:        0;
+  z-index:    100;
+  height:     var(--navbar-height);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.inner {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  max-width:       var(--max-width);
+  margin:          0 auto;
+  padding:         0 var(--space-lg);
+  height:          100%;
+}
+
+/* Logo */
+.logo {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-sm);
+  font-size:   var(--font-size-lg);
+  font-weight: 700;
+  color:       var(--color-text);
+  letter-spacing: -0.3px;
+  transition:  var(--transition-default);
+}
+
+.logo:hover {
+  color: var(--color-primary);
+}
+
+.logoIcon {
+  color:    var(--color-primary);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+/* Desktop nav links */
+.links {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-xs);
+  list-style:  none;
+}
+
+.link {
+  padding:       var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  font-size:     var(--font-size-base);
+  font-weight:   500;
+  color:         var(--color-text-muted);
+  transition:    var(--transition-default);
+  position:      relative;
+}
+
+.link:hover {
+  color:      var(--color-text);
+  background: var(--color-glass);
+}
+
+.link.active {
+  color:      var(--color-primary);
+  background: var(--color-primary-muted);
+}
+
+/* Hamburger */
+.hamburger {
+  display:     none;
+  color:       var(--color-text);
+  padding:     var(--space-xs);
+  border-radius: var(--radius-sm);
+  transition:  var(--transition-default);
+}
+
+.hamburger:hover {
+  background: var(--color-glass);
+}
+
+/* Mobile drawer */
+.drawer {
+  list-style:  none;
+  padding:     var(--space-sm) var(--space-lg) var(--space-md);
+  border-top:  1px solid var(--color-border);
+  overflow:    hidden;
+}
+
+.drawerLink {
+  display:       block;
+  padding:       var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-size:     var(--font-size-base);
+  font-weight:   500;
+  color:         var(--color-text-muted);
+  transition:    var(--transition-default);
+}
+
+.drawerLink:hover {
+  color:      var(--color-text);
+  background: var(--color-glass);
+}
+
+.drawerLink.active {
+  color:      var(--color-primary);
+  background: var(--color-primary-muted);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .links     { display: none; }
+  .hamburger { display: block; }
+}

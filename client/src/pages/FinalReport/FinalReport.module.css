@@ -1,0 +1,488 @@
+.page {
+  padding-top: var(--space-xl);
+}
+
+/* ─── Header ──────────────────────────────────────────────────────────────────── */
+.header {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  flex-wrap:       wrap;
+  gap:             var(--space-lg);
+  margin-bottom:   var(--space-2xl);
+}
+.headerLeft {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-sm);
+}
+.headerRight {
+  flex-shrink: 0;
+}
+.headerBadge {
+  display:     inline-flex;
+  align-items: center;
+  gap:         6px;
+  font-size:   var(--font-size-sm);
+  font-weight: 600;
+  color:       var(--color-primary);
+  background:  var(--color-primary-muted);
+  border:      1px solid var(--color-primary);
+  border-radius: var(--radius-full);
+  padding:     4px 14px;
+}
+.title {
+  font-size:   clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color:       var(--color-text);
+  line-height: 1.2;
+}
+.subtitle {
+  font-size: var(--font-size-base);
+  color:     var(--color-text-muted);
+}
+
+/* ─── Sections ───────────────────────────────────────────────────────────────── */
+.section {
+  margin-bottom: var(--space-2xl);
+}
+.sectionTitle {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--space-sm);
+  font-size:     var(--font-size-xl);
+  font-weight:   700;
+  color:         var(--color-text);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ─── Summary ────────────────────────────────────────────────────────────────── */
+.summaryBox {
+  padding:       var(--space-xl);
+  background:    rgba(59, 130, 246, 0.05);
+  border:        1px solid rgba(59, 130, 246, 0.2);
+  border-left:   4px solid var(--color-primary);
+  border-radius: var(--radius-card);
+}
+.summaryText {
+  font-size:   var(--font-size-lg);
+  color:       var(--color-text);
+  line-height: 1.75;
+}
+
+/* ─── Score cards ────────────────────────────────────────────────────────────── */
+.scoreGrid {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   var(--space-lg);
+}
+.scoreCard {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  text-align:     center;
+  gap:            var(--space-sm);
+  padding:        var(--space-xl);
+  background:     var(--color-glass);
+  border:         1px solid var(--color-border);
+  border-radius:  var(--radius-card);
+  backdrop-filter: blur(8px);
+}
+.scoreCardIcon {
+  font-size: 24px;
+  color:     var(--color-primary);
+}
+.scoreCardLabel {
+  font-size:      13px;
+  font-weight:    700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color:          var(--color-text-muted);
+}
+.scoreCardValue {
+  font-size:   2.5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.scoreCardMax {
+  font-size:   1.1rem;
+  font-weight: 400;
+  color:       var(--color-text-muted);
+}
+.scoreCardBadge {
+  font-size:     14px;
+  font-weight:   700;
+  padding:       5px 14px;
+  border-radius: var(--radius-full);
+  border:        1px solid;
+  background:    transparent;
+}
+
+/* ─── Strengths / Improvement two-column ─────────────────────────────────────── */
+.twoCol {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   var(--space-xl);
+}
+.tagList {
+  list-style: none;
+  display:    flex;
+  flex-direction: column;
+  gap:        var(--space-sm);
+}
+.tag {
+  display:     flex;
+  align-items: flex-start;
+  gap:         var(--space-sm);
+  font-size:   var(--font-size-base);
+  padding:     var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  line-height: 1.6;
+}
+.tagStrength {
+  background:   rgba(16, 185, 129, 0.06);
+  border:       1px solid rgba(16, 185, 129, 0.2);
+  border-left:  3px solid #6ee7b7;
+  color:        var(--color-text);
+}
+.tagStrength svg { color: #6ee7b7; flex-shrink: 0; margin-top: 3px; }
+
+.tagWeak {
+  background:   rgba(239, 68, 68, 0.06);
+  border:       1px solid rgba(239, 68, 68, 0.2);
+  border-left:  3px solid #fca5a5;
+  color:        var(--color-text);
+}
+.tagWeak svg { color: #fca5a5; flex-shrink: 0; margin-top: 3px; }
+
+/* ─── Question-wise feedback ─────────────────────────────────────────────────── */
+.qFeedbackList {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-lg);
+}
+.qFeedbackCard {
+  padding:       var(--space-xl);
+  background:    var(--color-glass);
+  border:        1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(8px);
+}
+.qFeedbackHeader {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   var(--space-md);
+}
+.qNum {
+  font-size:     var(--font-size-sm);
+  font-weight:   700;
+  color:         var(--color-primary);
+  background:    var(--color-primary-muted);
+  border:        1px solid var(--color-primary);
+  border-radius: var(--radius-full);
+  padding:       2px 12px;
+}
+.qScorePills {
+  display: flex;
+  gap:     var(--space-sm);
+}
+.qScorePill {
+  font-size:   var(--font-size-lg);
+  font-weight: 800;
+}
+.qText {
+  font-size:     var(--font-size-lg);
+  font-weight:   600;
+  color:         var(--color-text);
+  line-height:   1.55;
+  margin-bottom: var(--space-md);
+}
+.qFeedbackText {
+  font-size:     var(--font-size-base);
+  color:         var(--color-text-muted);
+  line-height:   1.7;
+  margin-bottom: var(--space-md);
+}
+.qMiniSection {
+  display:   flex;
+  gap:       var(--space-sm);
+  flex-wrap: wrap;
+  font-size: var(--font-size-sm);
+  color:     var(--color-text-muted);
+  margin-top: var(--space-xs);
+}
+.qMiniLabel {
+  font-weight:  700;
+  color:        #6ee7b7;
+  flex-shrink:  0;
+}
+.qMiniLabelWeak {
+  color: #fca5a5;
+}
+.qMiniItems {
+  color: var(--color-text-muted);
+}
+
+/* ─── Learning Roadmap ───────────────────────────────────────────────────────── */
+.roadmapGrid {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-md);
+}
+.roadmapItem {
+  display:     flex;
+  align-items: flex-start;
+  gap:         var(--space-lg);
+  padding:     var(--space-md) var(--space-xl);
+  background:  var(--color-glass);
+  border:      1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+.roadmapStep {
+  font-size:   2rem;
+  font-weight: 900;
+  color:       var(--color-primary);
+  opacity:     0.3;
+  line-height: 1;
+  min-width:   48px;
+  text-align:  center;
+}
+.roadmapTopic {
+  font-size:     var(--font-size-base);
+  font-weight:   600;
+  color:         var(--color-text);
+  margin-bottom: 2px;
+}
+.roadmapHint {
+  font-size: var(--font-size-sm);
+  color:     var(--color-text-muted);
+}
+
+/* ─── Final recommendation ───────────────────────────────────────────────────── */
+.recommendationBox {
+  padding:       var(--space-xl);
+  background:    rgba(139, 92, 246, 0.06);
+  border:        1px solid rgba(139, 92, 246, 0.25);
+  border-left:   4px solid var(--color-accent);
+  border-radius: var(--radius-card);
+}
+.recommendationText {
+  font-size:   var(--font-size-lg);
+  color:       var(--color-text);
+  line-height: 1.75;
+}
+
+/* ─── Final actions ──────────────────────────────────────────────────────────── */
+.finalActions {
+  display:         flex;
+  align-items:     center;
+  gap:             var(--space-md);
+  flex-wrap:       wrap;
+  padding-top:     var(--space-lg);
+  border-top:      1px solid var(--color-border);
+  margin-top:      var(--space-xl);
+  padding-bottom:  var(--space-xl);
+}
+
+@media (max-width: 640px) {
+  .finalActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .finalActions > * {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ─── Empty state ────────────────────────────────────────────────────────────── */
+.emptyState {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  text-align:     center;
+  gap:            var(--space-lg);
+  padding:        var(--space-2xl) var(--space-lg);
+}
+.emptyIcon {
+  font-size: 56px;
+  color:     var(--color-primary);
+  opacity:   0.4;
+}
+.emptyTitle {
+  font-size:   var(--font-size-xl);
+  font-weight: 700;
+  color:       var(--color-text);
+}
+.emptyText {
+  font-size:   var(--font-size-base);
+  color:       var(--color-text-muted);
+  max-width:   460px;
+  line-height: 1.7;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .scoreGrid { grid-template-columns: repeat(2, 1fr); }
+  .twoCol    { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .scoreGrid { grid-template-columns: 1fr; }
+  .header    { flex-direction: column; align-items: flex-start; }
+}
+
+/* ─── JD Match Panel (Final Report) ──────────────────────────────────────────── */
+.jdPanel {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-lg);
+  padding:        var(--space-xl);
+  background:     var(--color-glass);
+  border:         1px solid var(--color-border);
+  border-radius:  var(--radius-card);
+  backdrop-filter: blur(8px);
+}
+
+.jdPanelTop {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  flex-wrap:       wrap;
+  gap:             var(--space-lg);
+}
+
+.jdReadinessBlock {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-xs);
+}
+
+.jdReadinessLabel {
+  font-size:      13px;
+  font-weight:    700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color:          var(--color-text-muted);
+}
+
+.jdReadinessBadge {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       7px 18px;
+  border-radius: var(--radius-full);
+  border:        1px solid;
+  font-size:     var(--font-size-base);
+  font-weight:   700;
+  background:    transparent;
+}
+
+.jdMatchPctBlock {
+  display:        flex;
+  flex-direction: column;
+  align-items:    flex-end;
+  gap:            2px;
+}
+
+.jdMatchPctNum {
+  font-size:   2.8rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.jdMatchPctLabel {
+  font-size:   13px;
+  font-weight: 600;
+  color:       var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.jdBarTrack {
+  width:         100%;
+  height:        10px;
+  background:    var(--color-surface-2);
+  border-radius: var(--radius-full);
+  overflow:      hidden;
+}
+
+.jdBarFill {
+  height:        100%;
+  border-radius: var(--radius-full);
+  min-width:     4px;
+}
+
+.jdSkillCols {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   var(--space-xl);
+}
+
+.jdColTitle {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--space-sm);
+  font-size:     var(--font-size-sm);
+  font-weight:   700;
+  color:         var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-sm);
+}
+
+.jdTagList {
+  display:        flex;
+  flex-direction: column;
+  gap:            6px;
+  list-style:     none;
+}
+
+.jdTag {
+  font-size:     var(--font-size-sm);
+  padding:       5px 12px;
+  border-radius: var(--radius-sm);
+  font-weight:   500;
+  line-height:   1.5;
+}
+
+.jdTagMatch {
+  background:  rgba(16, 185, 129, 0.08);
+  border:      1px solid rgba(16, 185, 129, 0.2);
+  color:       #6ee7b7;
+}
+
+.jdTagMissing {
+  background:  rgba(239, 68, 68, 0.08);
+  border:      1px solid rgba(239, 68, 68, 0.2);
+  color:       #fca5a5;
+}
+
+.jdTechSection {
+  padding-top: var(--space-md);
+  border-top:  1px solid var(--color-border);
+}
+
+.jdTechTags {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.jdTechTag {
+  font-size:     var(--font-size-sm);
+  padding:       5px 14px;
+  border-radius: var(--radius-full);
+  background:    rgba(245, 158, 11, 0.1);
+  border:        1px solid rgba(245, 158, 11, 0.3);
+  color:         #fcd34d;
+  font-weight:   600;
+}
+
+@media (max-width: 640px) {
+  .jdSkillCols   { grid-template-columns: 1fr; }
+  .jdMatchPctBlock { align-items: flex-start; }
+}
+

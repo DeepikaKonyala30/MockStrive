@@ -1,0 +1,185 @@
+.page {
+  padding-top: var(--space-xl);
+}
+
+/* ─── Header ──────────────────────────────────────────────────────────────────── */
+.header {
+  text-align:    center;
+  margin-bottom: var(--space-xl);
+}
+.label {
+  display:        inline-block;
+  font-size:      13px;
+  font-weight:    700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color:          var(--color-primary);
+  margin-bottom:  var(--space-sm);
+}
+.title {
+  font-size:   clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color:       var(--color-text);
+  line-height: 1.2;
+  margin-bottom: var(--space-sm);
+}
+.subtitle {
+  font-size:   var(--font-size-lg);
+  color:       var(--color-text-muted);
+  line-height: 1.7;
+}
+
+/* ─── Modes grid ──────────────────────────────────────────────────────────────── */
+.modesGrid {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   var(--space-lg);
+  margin-bottom:         var(--space-xl);
+}
+
+/* ─── Mode card ───────────────────────────────────────────────────────────────── */
+.modeCard {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-md);
+  padding:        var(--space-xl);
+  background:     var(--color-glass);
+  border:         2px solid var(--color-border);
+  border-radius:  var(--radius-card);
+  backdrop-filter: blur(8px);
+  cursor:         pointer;
+  transition:     border-color 0.2s ease, background 0.2s ease;
+  position:       relative;
+  outline:        none;
+  text-align:     left;
+  font-family:    inherit;
+  color:          inherit;
+}
+.modeCard:hover {
+  border-color: var(--card-color, var(--color-primary));
+  background:   rgba(255, 255, 255, 0.04);
+}
+.modeCard.selected {
+  border-color: var(--card-color, var(--color-primary));
+  background:   rgba(255, 255, 255, 0.04);
+}
+.selectedBadge {
+  position:      absolute;
+  top:           12px;
+  right:         12px;
+  font-size:     16px;
+  color:         var(--card-color, var(--color-primary));
+}
+.modeIconWrap {
+  width:           48px;
+  height:          48px;
+  border-radius:   var(--radius-sm);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  font-size:       22px;
+  background:      var(--icon-bg);
+  color:           var(--card-color, var(--color-primary));
+  border:          1px solid var(--card-color, var(--color-primary));
+  opacity:         0.85;
+  flex-shrink:     0;
+}
+.modeCardTitle {
+  font-size:   var(--font-size-xl);
+  font-weight: 800;
+  color:       var(--color-text);
+  line-height: 1.1;
+}
+.modeCardDesc {
+  font-size:   var(--font-size-base);
+  color:       var(--color-text-muted);
+  line-height: 1.65;
+}
+.modeTagRow {
+  display:  flex;
+  gap:      var(--space-xs);
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+.modeTag {
+  font-size:     14px;
+  font-weight:   600;
+  padding:       4px 12px;
+  border-radius: var(--radius-full);
+  border:        1px solid var(--card-color, var(--color-primary));
+  color:         var(--card-color, var(--color-primary));
+  background:    transparent;
+}
+
+/* Recommended badge */
+.recommendedChip {
+  position:       absolute;
+  top:            -10px;
+  left:           50%;
+  transform:      translateX(-50%);
+  background:     var(--color-primary);
+  color:          #fff;
+  font-size:      13px;
+  font-weight:    700;
+  padding:        4px 14px;
+  border-radius:  var(--radius-full);
+  letter-spacing: 0.4px;
+  white-space:    nowrap;
+}
+
+/* Requires JD chip */
+.requiresJdChip {
+  position:       absolute;
+  top:            -10px;
+  left:           50%;
+  transform:      translateX(-50%);
+  background:     var(--color-surface-2);
+  color:          var(--color-text-muted);
+  border:         1px solid var(--color-border);
+  font-size:      12px;
+  font-weight:    700;
+  padding:        3px 12px;
+  border-radius:  var(--radius-full);
+  letter-spacing: 0.4px;
+  white-space:    nowrap;
+}
+
+/* JD loaded chip */
+.jdReadyChip {
+  position:       absolute;
+  top:            -10px;
+  left:           50%;
+  transform:      translateX(-50%);
+  background:     rgba(16, 185, 129, 0.15);
+  border:         1px solid rgba(16, 185, 129, 0.4);
+  color:          #6ee7b7;
+  font-size:      12px;
+  font-weight:    700;
+  padding:        3px 12px;
+  border-radius:  var(--radius-full);
+  letter-spacing: 0.4px;
+  white-space:    nowrap;
+}
+
+/* Disabled mode card */
+.modeCardDisabled {
+  opacity: 0.45;
+  cursor:  not-allowed;
+  pointer-events: none;
+}
+
+/* ─── Actions ─────────────────────────────────────────────────────────────────── */
+.actions {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-md);
+  flex-wrap:   wrap;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .modesGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .modesGrid { grid-template-columns: 1fr; }
+}
