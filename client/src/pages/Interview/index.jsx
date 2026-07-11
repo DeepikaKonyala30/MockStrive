@@ -10,7 +10,7 @@ import { getInterviewState, setInterviewReport, setInterviewEvaluations, getInte
 import { apiFetch } from '../../utils/api.js';
 import styles from './Interview.module.css';
 
-const STATUS = { IDLE: 'idle', STARTING: 'starting', ASKING: 'asking', EVALUATING: 'evaluating', COACH_TIP: 'coach_tip', FINISHED: 'finished', ERROR: 'error' };
+const STATUS = { IDLE: 'idle', STARTING: 'starting', ASKING: 'asking', EVALUATING: 'evaluating', REVIEW: 'review', FINISHED: 'finished', ERROR: 'error' };
 
 const fadeUp = {
   hidden:  { opacity: 0, y: 20 },
@@ -31,15 +31,17 @@ function Interview() {
   const [question,      setQuestion]      = useState('');
   const [answer,        setAnswer]        = useState('');
   const [currentIndex,  setCurrentIndex]  = useState(0);
-  const [totalQuestions,setTotalQuestions]= useState(5);
+  const [totalQuestions,setTotalQuestions]= useState(7);
   const [evaluation,    setEvaluation]    = useState(null);
-  const [coachTip,      setCoachTip]      = useState('');
-
   const textareaRef = useRef(null);
+
+  const startRef = useRef(false);
 
   // Auto-start when the component mounts if we have an analysis
   useEffect(() => {
     if (!analysis) return; // guard handled by early return below
+    if (startRef.current) return;
+    startRef.current = true;
     startInterview();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -54,6 +56,14 @@ function Interview() {
   const startInterview = async () => {
     setStatus(STATUS.STARTING);
     setErrorMsg('');
+    
+    // Completely clear any previous interview state
+    sessionStorage.removeItem('mockStriveReport');
+    sessionStorage.removeItem('mockStriveEvaluations');
+    sessionStorage.removeItem('nextQuestion');
+    sessionStorage.removeItem('nextQuestionIdx');
+    sessionStorage.removeItem('totalQuestions');
+
     try {
       const res  = await apiFetch('/api/interview/start', {
         method:  'POST',
@@ -64,7 +74,7 @@ function Interview() {
       if (!res.ok) throw new Error(data.error || `Server error (${res.status})`);
       setQuestion(data.question);
       setCurrentIndex(1);
-      setTotalQuestions(data.totalQuestions || 5);
+      setTotalQuestions(data.totalQuestions || 7);
       setStatus(STATUS.ASKING);
     } catch (err) {
       setErrorMsg(err.message);
@@ -87,10 +97,7 @@ function Interview() {
 
       setEvaluation(data.evaluation);
 
-      // Generate a coach tip from the evaluation feedback
-      const tip = buildCoachTip(data.evaluation);
-      setCoachTip(tip);
-      setStatus(STATUS.COACH_TIP);
+      setStatus(STATUS.REVIEW);
 
       if (data.finished) {
         // Merge the profile analysis into the report so FinalReport can re-use it
@@ -122,24 +129,13 @@ function Interview() {
     setTotalQuestions(Number(total)  || totalQuestions);
     setAnswer('');
     setEvaluation(null);
-    setCoachTip('');
     setStatus(STATUS.ASKING);
     sessionStorage.removeItem('nextQuestion');
     sessionStorage.removeItem('nextQuestionIdx');
     sessionStorage.removeItem('totalQuestions');
   };
 
-  /** Build a short coaching tip from the evaluation object */
-  const buildCoachTip = (ev) => {
-    if (!ev) return '';
-    const weaknesses = ev.weaknesses?.slice(0, 1)[0] || '';
-    const topics     = ev.learningTopics?.slice(0, 1)[0] || '';
-    if (weaknesses && topics) {
-      return `To strengthen your answer: address "${weaknesses}". Spend some time reviewing ${topics} before your actual interview.`;
-    }
-    if (ev.feedback) return ev.feedback;
-    return 'Good attempt! Focus on structuring your answer with a clear beginning, middle, and conclusion next time.';
-  };
+
 
   const isFinishedAfterTip = () => !!getInterviewReport();
 
@@ -213,7 +209,7 @@ function Interview() {
         <AnimatePresence mode="wait">
           {status === STATUS.STARTING && (
             <motion.div key="starting" className={styles.centeredState} variants={fadeUp} initial="hidden" animate="visible" exit={{ opacity: 0 }}>
-              <Loader size="lg" label="IBM Granite is generating your first question…" />
+              <Loader size="lg" label="Generating your first question…" />
             </motion.div>
           )}
 
@@ -258,13 +254,13 @@ function Interview() {
           {/* ── EVALUATING ──── */}
           {status === STATUS.EVALUATING && (
             <motion.div key="evaluating" className={styles.centeredState} variants={fadeUp} initial="hidden" animate="visible" exit={{ opacity: 0 }}>
-              <Loader size="lg" label="IBM Granite is evaluating your answer…" />
+              <Loader size="lg" label="Evaluating your answer…" />
             </motion.div>
           )}
 
-          {/* ── COACH TIP ──── */}
-          {status === STATUS.COACH_TIP && evaluation && (
-            <motion.div key="coachtip" variants={fadeUp} initial="hidden" animate="visible" exit={{ opacity: 0 }}>
+          {/* ── REVIEW ──── */}
+          {status === STATUS.REVIEW && evaluation && (
+            <motion.div key="review" variants={fadeUp} initial="hidden" animate="visible" exit={{ opacity: 0 }}>
 
               {/* Scores */}
               <div className={styles.scoreRow}>
@@ -272,20 +268,6 @@ function Interview() {
                 <ScorePill label="Technical"     score={evaluation.technicalScore}      color={scoreColor(evaluation.technicalScore)} />
                 <ScorePill label="Communication" score={evaluation.communicationScore}  color={scoreColor(evaluation.communicationScore)} />
               </div>
-
-              {/* AI Coach Tip */}
-              <motion.div
-                className={styles.coachTipBox}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.45 }}
-              >
-                <div className={styles.coachTipHeader}>
-                  <FiStar className={styles.coachTipIcon} aria-hidden="true" />
-                  <span>AI Coach Tip</span>
-                </div>
-                <p className={styles.coachTipText}>{coachTip}</p>
-              </motion.div>
 
               {/* Strengths / Weaknesses */}
               <div className={styles.evalGrid}>

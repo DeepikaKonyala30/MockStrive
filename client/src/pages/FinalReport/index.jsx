@@ -419,25 +419,25 @@ function JdMatchPanel({ jdMatch }) {
 
       {/* Skills two-col */}
       <div className={styles.jdSkillCols}>
-        {jdMatch.matchingSkills?.length > 0 && (
+        {jdMatch.keyStrengths?.length > 0 && (
           <div>
             <div className={styles.jdColTitle}>
-              <FiCheckCircle aria-hidden="true" style={{ color: '#6ee7b7' }} /> Matching Skills
+              <FiCheckCircle aria-hidden="true" style={{ color: '#6ee7b7' }} /> Key Strengths
             </div>
             <ul className={styles.jdTagList}>
-              {jdMatch.matchingSkills.map((s, i) => (
+              {jdMatch.keyStrengths.map((s, i) => (
                 <li key={i} className={`${styles.jdTag} ${styles.jdTagMatch}`}>{s}</li>
               ))}
             </ul>
           </div>
         )}
-        {jdMatch.missingSkills?.length > 0 && (
+        {jdMatch.skillGaps?.length > 0 && (
           <div>
             <div className={styles.jdColTitle}>
-              <FiAlertCircle aria-hidden="true" style={{ color: '#fca5a5' }} /> Missing Skills
+              <FiAlertCircle aria-hidden="true" style={{ color: '#fca5a5' }} /> Skill Gaps
             </div>
             <ul className={styles.jdTagList}>
-              {jdMatch.missingSkills.map((s, i) => (
+              {jdMatch.skillGaps.map((s, i) => (
                 <li key={i} className={`${styles.jdTag} ${styles.jdTagMissing}`}>{s}</li>
               ))}
             </ul>

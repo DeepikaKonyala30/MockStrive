@@ -18,7 +18,7 @@
  *   jdData      : {
  *                   jdText           : string   — raw job description text
  *                   jdMatch          : {
- *                     skillMatchPercent, matchingSkills, missingSkills,
+ *                     skillMatchPercent, keyStrengths, skillGaps,
  *                     interviewReadiness, technologiesToImprove, jdFocusTopics
  *                   }
  *                 } | null
@@ -26,25 +26,25 @@
  *     mode        : string          — "hr" | "technical" | "dsa" | "behavioral" | "ai_llm" | "mixed" | "job_specific"
  *     started     : boolean
  *     finished    : boolean
- *     totalAsked  : number          — count of questions asked so far (max 5)
+ *     totalAsked  : number          — count of questions asked so far (max 7)
  *     categorySequence : string[]   — pre-planned category for each question slot
  *     questions   : string[]        — ordered list of questions asked
  *     answers     : string[]        — candidate answers in matching order
- *     evaluations : object[]        — per-answer evaluation objects from Granite
+ *     evaluations : object[]        — per-answer evaluation objects from Llama 3.3 70B
  *     report      : object | null   — final report once interview is complete
  *   }
  * }
  */
 
-export const MAX_QUESTIONS    = 5;
-export const MAX_JD_QUESTIONS = 8;   // job_specific mode asks more targeted questions
+export const MAX_QUESTIONS    = 7;   // 7 personalized, skill-gap-targeted questions per session
+export const MAX_JD_QUESTIONS = 7;   // job_specific mode: same count, topics driven by JD focus areas
 
 const _makeInterview = () => ({
   mode:             'mixed',
   started:          false,
   finished:         false,
   totalAsked:       0,
-  totalQuestions:   5,   // can be overridden at startInterview() time
+  totalQuestions:   7,   // can be overridden at startInterview() time
   categorySequence: [],
   questions:        [],
   answers:          [],
@@ -118,7 +118,7 @@ export const startInterview = (firstQuestion, mode, categorySequence, totalQuest
 /**
  * Record a submitted answer and its evaluation.
  * @param {string} answer
- * @param {object} evaluation — structured evaluation from Granite
+ * @param {object} evaluation — structured evaluation from watsonx.ai
  */
 export const recordAnswer = (answer, evaluation) => {
   _session.interview.answers.push(answer);

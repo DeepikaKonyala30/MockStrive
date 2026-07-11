@@ -317,7 +317,7 @@ function CandidateProfile() {
                     Reset Profile
                   </button>
                 )}
-                {isLoading && <Loader size="sm" label="Calling IBM Granite…" />}
+                {isLoading && <Loader size="sm" label="Analysing your profile…" />}
               </div>
             </form>
           </div>
@@ -394,7 +394,7 @@ function CandidateProfile() {
 
               <textarea
                 className={`${styles.input} ${styles.textarea} ${styles.jdTextarea}`}
-                placeholder="Paste the full job description here. IBM Granite will compare it with your profile to generate a skill-match report and unlock Job-Specific Interview mode…"
+                placeholder="Paste the full job description here. The AI will compare it with your profile to generate a skill-match report and unlock Job-Specific Interview mode…"
                 value={jdText}
                 onChange={(e) => {
                   setJdText(e.target.value);
@@ -438,7 +438,7 @@ function CandidateProfile() {
                     Analyse your profile first to enable JD analysis.
                   </span>
                 )}
-                {jdAnalyzing && <Loader size="sm" label="IBM Granite analysing…" />}
+                {jdAnalyzing && <Loader size="sm" label="Analysing job description…" />}
               </div>
 
               {jdError && (
@@ -492,27 +492,27 @@ function CandidateProfile() {
 
                   {/* Two-column skills */}
                   <div className={styles.jdMatchCols}>
-                    {jdMatch.matchingSkills?.length > 0 && (
+                    {jdMatch.keyStrengths?.length > 0 && (
                       <div className={styles.jdMatchCol}>
                         <div className={styles.jdMatchColTitle}>
                           <FiCheckCircle aria-hidden="true" style={{ color: '#6ee7b7' }} />
-                          Matching Skills
+                          Key Strengths
                         </div>
                         <ul className={styles.skillTagList}>
-                          {jdMatch.matchingSkills.map((s, i) => (
+                          {jdMatch.keyStrengths.map((s, i) => (
                             <li key={i} className={`${styles.skillTag} ${styles.skillTagMatch}`}>{s}</li>
                           ))}
                         </ul>
                       </div>
                     )}
-                    {jdMatch.missingSkills?.length > 0 && (
+                    {jdMatch.skillGaps?.length > 0 && (
                       <div className={styles.jdMatchCol}>
                         <div className={styles.jdMatchColTitle}>
                           <FiAlertCircle aria-hidden="true" style={{ color: '#fca5a5' }} />
-                          Missing Skills
+                          Skill Gaps
                         </div>
                         <ul className={styles.skillTagList}>
-                          {jdMatch.missingSkills.map((s, i) => (
+                          {jdMatch.skillGaps.map((s, i) => (
                             <li key={i} className={`${styles.skillTag} ${styles.skillTagMissing}`}>{s}</li>
                           ))}
                         </ul>

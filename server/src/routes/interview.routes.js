@@ -193,9 +193,13 @@ router.post('/interview/answer', async (req, res, next) => {
 
     // ── More questions remain → generate next question ───────────────────────
     const updatedSession = getSession();
+    const effectiveAnalysis = (interview.mode === 'job_specific' && jdData?.jdMatch?.jdFocusTopics?.length)
+      ? { ...analysis, focusTopics: jdData.jdMatch.jdFocusTopics, weaknesses: Array.from(new Set([...analysis.weaknesses, ...jdData.jdMatch.skillGaps])) }
+      : analysis;
+
     const nextQuestion = await generateNextQuestion(
       profile,
-      analysis,
+      effectiveAnalysis,
       updatedSession.interview.questions,
       updatedSession.interview.categorySequence,
     );

@@ -37,7 +37,7 @@
  * }
  */
 
-import { queryWatsonx } from './watsonx.js';
+import { queryWatsonxJson, extractJsonRobust } from './watsonx.js';
 
 // ─── Evaluation prompt ────────────────────────────────────────────────────────
 
@@ -53,34 +53,33 @@ import { queryWatsonx } from './watsonx.js';
  */
 function buildEvaluationPrompt(profile, analysis, question, answer, questionIndex) {
   return `<|system|>
-You are an expert technical interview evaluator assessing a candidate's response.
-Evaluate the answer below on five dimensions and return a structured JSON assessment.
+You are an expert interviewer evaluating a candidate's answer.
+Internally reason about the answer's quality, identifying specific strengths, weaknesses, and skill gaps.
 
-Scoring dimensions (each 0–100):
-- overallScore: holistic score combining all dimensions
-- technicalScore: accuracy, depth, and correctness of technical content (0 if non-technical question)
-- communicationScore: clarity, structure, and articulation of the response
+Rules:
+- 'strengths': State EXACTLY what the candidate did correctly in the context of this specific question. Do not use generic phrases like "attempted to answer" or "good effort".
+- 'weaknesses': Identify the specific concept, logic, or explanation that was missing or incorrect. Do not use generic phrases like "needs more detail" or "improve communication".
+- 'learningTopics': Only list concrete concepts or technologies to study next. Do not say "learn more".
+- 'feedback' (AI Coach Tip): Give exactly ONE practical exercise related to the current question (max 2 sentences). Never repeat weaknesses. Never start with "You should..." or "To improve...". Start with an action verb (e.g., "Build a small REST API...").
+- Job-Specific: If assessing a Job-Specific question, evaluate how well the answer aligns with the overall job role and responsibilities, not just a single mentioned skill.
+- Every evaluation must feel highly personalized to the candidate's actual answer. Avoid all generic filler.
+- Do NOT repeat the question or answer.
+- Output valid JSON only.
 
-Output valid JSON only — no markdown, no prose, no code fences.
 Schema:
 {
-  "overallScore": <integer 0-100>,
-  "technicalScore": <integer 0-100>,
-  "communicationScore": <integer 0-100>,
-  "strengths": ["<what the candidate did well>", ...],
-  "weaknesses": ["<specific gap or improvement area>", ...],
-  "learningTopics": ["<topic the candidate should study based on this answer>", ...],
-  "feedback": "<2-4 sentences of constructive, specific feedback>"
+  "overallScore": <0-100>,
+  "technicalScore": <0-100 (0 if non-technical)>,
+  "communicationScore": <0-100>,
+  "strengths": ["<what the candidate did well>"],
+  "weaknesses": ["<what was technically/conceptually missing>"],
+  "learningTopics": ["<concepts or technologies to study>"],
+  "feedback": "<One practical exercise starting with an action verb (max 2 sentences)>"
 }
-Constraints: 1-3 strengths, 1-3 weaknesses, 1-3 learningTopics.
 <|user|>
-Candidate: ${profile.fullName}
-Target Role: ${profile.targetRole} (${analysis.candidateLevel})
-Interview Difficulty: ${analysis.difficulty}
-
-Question ${questionIndex}: ${question}
-
-Candidate Answer: ${answer || '(no answer provided)'}
+Role: ${profile.targetRole} (${analysis.candidateLevel}, ${analysis.difficulty})
+Question: ${question}
+Answer: ${answer || '(no answer provided)'}
 <|assistant|>
 `;
 }
@@ -97,58 +96,40 @@ Candidate Answer: ${answer || '(no answer provided)'}
  */
 function buildReportPrompt(profile, analysis, evaluations) {
   const evalSummary = evaluations.map((e, i) =>
-    `Q${i + 1}: "${e.question}"\n  Score: ${e.overallScore}/100 | Technical: ${e.technicalScore}/100 | Communication: ${e.communicationScore}/100\n  Feedback: ${e.feedback}`
-  ).join('\n\n');
+    `Q${i + 1}: Score ${e.overallScore}. Feedback: ${e.feedback}`
+  ).join('\n');
 
   return `<|system|>
-You are a senior interview coach writing a comprehensive post-interview report.
-Synthesise the per-question evaluations below into a holistic final assessment.
+You are a senior interview coach writing a final post-interview report.
+Synthesise the evaluations into a concise, insightful assessment.
 
-Output valid JSON only — no markdown, no prose, no code fences.
+Rules:
+- Infer overall strengths and weaknesses from the evaluations. Do NOT repeat inputs.
+- 'learningTopics' should combine overall skill gaps, missing skills, and a learning plan.
+- 'summary' must act as an AI Coach Summary (2-3 lines max). It must clearly explain WHY the overall score was given and state interview readiness.
+- Keep all text concise. Avoid verbose explanations.
+- Output valid JSON only.
+
 Schema:
 {
-  "overallScore": <integer 0-100, average of all question scores>,
-  "technicalScore": <integer 0-100, average of technical scores>,
-  "communicationScore": <integer 0-100, average of communication scores>,
-  "strengths": ["<consistent strength shown across the interview>", ...],
-  "weaknesses": ["<recurring weakness or gap>", ...],
-  "learningTopics": ["<prioritised study topic for the candidate>", ...],
-  "summary": "<3-5 sentences: honest, specific, actionable overall assessment>"
+  "overallScore": <0-100 average>,
+  "technicalScore": <0-100 average>,
+  "communicationScore": <0-100 average>,
+  "strengths": ["<consistent strengths>"],
+  "weaknesses": ["<recurring weaknesses>"],
+  "learningTopics": ["<overall skill gap and learning plan>"],
+  "summary": "<2-3 lines explaining WHY the score was given and readiness>"
 }
-Constraints: 3-5 strengths, 2-4 weaknesses, 3-5 learningTopics.
 <|user|>
-Candidate: ${profile.fullName}
-Target Role: ${profile.targetRole}
-Candidate Level: ${analysis.candidateLevel}
-Interview Difficulty: ${analysis.difficulty}
-
-Per-question evaluations:
+Role: ${profile.targetRole} (${analysis.candidateLevel})
+Evaluations:
 ${evalSummary}
 <|assistant|>
 `;
 }
 
-// ─── JSON extraction (shared) ─────────────────────────────────────────────────
-
-function extractJson(raw) {
-  try { return JSON.parse(raw); } catch (_) { /* continue */ }
-
-  const fenced = raw.match(/```(?:json)?\s*([\s\S]*?)```/i);
-  if (fenced) {
-    try { return JSON.parse(fenced[1].trim()); } catch (_) { /* continue */ }
-  }
-
-  const start = raw.indexOf('{');
-  const end   = raw.lastIndexOf('}');
-  if (start !== -1 && end > start) {
-    try { return JSON.parse(raw.slice(start, end + 1)); } catch (_) { /* continue */ }
-  }
-
-  throw new Error(
-    '[evaluationService] Could not extract valid JSON from model response.\n' +
-    `Raw: ${raw.slice(0, 400)}`
-  );
-}
+// JSON extraction delegated to the shared extractJsonRobust in watsonx.js.
+const extractJson = (raw) => extractJsonRobust(raw, 'evaluationService');
 
 // ─── Validators ───────────────────────────────────────────────────────────────
 
@@ -196,7 +177,7 @@ function validateReport(parsed) {
 
 /**
  * evaluateAnswer
- * Send a question + answer pair to Granite and return a structured evaluation.
+ * Send a question + answer pair to watsonx.ai and return a structured evaluation.
  *
  * @param {object} profile
  * @param {object} analysis
@@ -209,11 +190,7 @@ export const evaluateAnswer = async (profile, analysis, question, answer, questi
   const prompt = buildEvaluationPrompt(profile, analysis, question, answer, questionIndex);
 
   console.log(`[evaluationService] Evaluating answer for Q${questionIndex}…`);
-  const raw = await queryWatsonx(prompt, { max_new_tokens: 600, temperature: 0.2 });
-  console.log('[evaluationService] Raw evaluation response:', raw.slice(0, 300));
-
-  const parsed     = extractJson(raw);
-  const evaluation = validateEvaluation(parsed);
+  const evaluation = await queryWatsonxJson(prompt, extractJson, validateEvaluation, { max_new_tokens: 250, temperature: 0.2 });
 
   console.log(`[evaluationService] Q${questionIndex} evaluation — overall: ${evaluation.overallScore}`);
   return evaluation;
@@ -244,11 +221,7 @@ export const generateReport = async (profile, analysis, questions, answers, eval
   const prompt = buildReportPrompt(profile, analysis, enrichedEvals);
 
   console.log('[evaluationService] Generating final report…');
-  const raw = await queryWatsonx(prompt, { max_new_tokens: 800, temperature: 0.2 });
-  console.log('[evaluationService] Raw report response:', raw.slice(0, 300));
-
-  const parsed = extractJson(raw);
-  const report = validateReport(parsed);
+  const report = await queryWatsonxJson(prompt, extractJson, validateReport, { max_new_tokens: 400, temperature: 0.2 });
 
   // Attach metadata, full evaluation trail, and optional JD match data
   return {

@@ -32,7 +32,7 @@ function About() {
         {/* About card */}
         <Card title="About MockStrive" animate={false} className={styles.card}>
           <p className={styles.description}>
-            MockStrive is an AI-powered interview coaching platform built with React, Express, IBM watsonx.ai, and IBM Granite Models. It enables users to practice personalized mock interviews, receive AI-based evaluations, and improve their confidence through detailed performance reports.
+            MockStrive is an AI-powered interview coaching platform built with React, Express, and IBM watsonx.ai. It uses Meta Llama 3.3 70B Instruct as the primary model (with IBM Granite 8B as an automatic fallback) to deliver personalised mock interviews, real-time AI evaluations, and detailed performance reports.
           </p>
 
           <div className={styles.stackSection}>
